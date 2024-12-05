@@ -29,7 +29,7 @@ public class changeSounds {
         frame.add(backToGame);
         backToGame.addActionListener(e ->{
         mainMenu.showWindow();
-        mainMenu.playSound("sounds/button_click.wav");
+        soundPlayer.playSound("sounds/button_click.wav");
         frame.dispose();
 
     });

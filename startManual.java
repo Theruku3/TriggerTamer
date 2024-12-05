@@ -29,9 +29,77 @@ public class startManual {
         frame.add(backToGame);
         backToGame.addActionListener(e ->{
         mainMenu.showWindow();
-        mainMenu.playSound("sounds/button_click.wav");
+        soundPlayer.playSound("sounds/button_click.wav");
         frame.dispose();
 
+    });
+    // Create a panel for the menu buttons
+    JPanel buttonPanel = new JPanel(new GridLayout(5, 1, 10, 10));
+
+    // Create buttons for each menu option
+    JButton startAutoButton = new JButton("Automatic soundboard");
+    JButton startManualButton = new JButton("Manual Soundboard");
+    JButton tutorialButton = new JButton("Tutorial / Instructions");
+    JButton changeSoundsButton = new JButton("Change sounds");
+    JButton exitButton = new JButton("Exit");
+
+    // Add buttons to the panel
+    buttonPanel.add(startAutoButton);
+    buttonPanel.add(startManualButton);
+    buttonPanel.add(tutorialButton);
+    buttonPanel.add(changeSoundsButton);
+    buttonPanel.add(exitButton);
+
+    // Add the button panel to the center
+    frame.add(buttonPanel, BorderLayout.CENTER);
+
+    // Create a panel for developer information
+    JPanel infoPanel = new JPanel(new GridLayout(3, 1));
+    JLabel explanationLabel = new JLabel("This program can play sounds automatically or manually to help desensitize your pet to sounds", JLabel.CENTER);
+    JLabel namesLabel = new JLabel("Developer: Thevindu", JLabel.CENTER);
+    JLabel termLabel = new JLabel("Winter 2024", JLabel.CENTER);
+
+    // Add developer info to the panel
+    infoPanel.add(explanationLabel);
+    infoPanel.add(namesLabel);
+    infoPanel.add(termLabel);
+
+    // Add the info panel to the bottom
+    frame.add(infoPanel, BorderLayout.SOUTH);
+
+    // Set up event listeners for each button
+    startAutoButton.addActionListener(e -> {
+        frame.dispose();
+        soundPlayer.playSound("sounds/button_click.wav");
+        startAuto StartAuto = new startAuto();
+        StartAuto.showWindow();
+    });
+
+    startManualButton.addActionListener(e -> {
+        frame.dispose();
+        soundPlayer.playSound("sounds/button_click.wav");
+        startManual StartManual = new startManual();
+        StartManual.showWindow();
+    });
+
+    tutorialButton.addActionListener(e -> {
+        frame.dispose();
+        soundPlayer.playSound("sounds/button_click.wav");
+        tutorial Tutorial = new tutorial();
+        Tutorial.showWindow();
+    });
+
+    changeSoundsButton.addActionListener(e -> {
+        frame.dispose();
+        soundPlayer.playSound("sounds/button_click.wav");
+        changeSounds ChangeSounds = new changeSounds();
+        ChangeSounds.showWindow();
+    });
+
+    exitButton.addActionListener(e -> {
+        frame.dispose();
+        soundPlayer.playSound("sounds/button_click.wav");
+        System.exit(0);  // Exit the application
     });
 }
     

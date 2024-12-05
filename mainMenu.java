@@ -45,14 +45,6 @@ public class mainMenu extends JFrame {
         // Add image panel to the top
         frame.add(imagePanel, BorderLayout.NORTH);
 
-        // Add window listener for close event
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                onApplicationClose(getStartTime());
-            }
-        });
-
         // Create a panel for the menu buttons
         JPanel buttonPanel = new JPanel(new GridLayout(5, 1, 10, 10));
 
@@ -90,35 +82,35 @@ public class mainMenu extends JFrame {
         // Set up event listeners for each button
         startAutoButton.addActionListener(e -> {
             frame.dispose();
-            playSound("sounds/button_click.wav");
+            soundPlayer.playSound("sounds/button_click.wav");
             startAuto StartAuto = new startAuto();
             StartAuto.showWindow();
         });
 
         startManualButton.addActionListener(e -> {
             frame.dispose();
-            playSound("sounds/button_click.wav");
+            soundPlayer.playSound("sounds/button_click.wav");
             startManual StartManual = new startManual();
             StartManual.showWindow();
         });
 
         tutorialButton.addActionListener(e -> {
             frame.dispose();
-            playSound("sounds/button_click.wav");
+            soundPlayer.playSound("sounds/button_click.wav");
             tutorial Tutorial = new tutorial();
             Tutorial.showWindow();
         });
 
         changeSoundsButton.addActionListener(e -> {
             frame.dispose();
-            playSound("sounds/button_click.wav");
+            soundPlayer.playSound("sounds/button_click.wav");
             changeSounds ChangeSounds = new changeSounds();
             ChangeSounds.showWindow();
         });
 
         exitButton.addActionListener(e -> {
             frame.dispose();
-            playSound("sounds/button_click.wav");
+            soundPlayer.playSound("sounds/button_click.wav");
             System.exit(0);  // Exit the application
         });
     }
@@ -160,27 +152,6 @@ public class mainMenu extends JFrame {
         });
 
         timer.start();
-    }
-
-    public static void playSound(String soundFile) {
-        try {
-            AudioInputStream foundAudio = AudioSystem.getAudioInputStream(new File(soundFile).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(foundAudio);
-            clip.start();
-        } catch (Exception ex) {
-            System.out.println("Sound file could not be found");
-            ex.printStackTrace();
-        }
-    }
-
-    public static void onApplicationClose(long startTime) {
-        long endTime = System.currentTimeMillis();
-        System.out.print((endTime - startTime) / 1000);
-    }
-
-    public static long getStartTime() {
-        return startTime;
     }
 
     /**
