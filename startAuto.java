@@ -65,7 +65,7 @@ public class startAuto {
 
 
         randomButton.addActionListener(e -> {
-            int rand = Math.toIntExact(System.currentTimeMillis() / 1000) % files.length;
+            int rand = (int)Math.sqrt(Math.toIntExact(System.currentTimeMillis()) / 1000) % files.length;
             File randomSoundFile = files[rand];
             soundPlayer.playSound("sounds/trigger_noises/" + randomSoundFile.getName());
         });

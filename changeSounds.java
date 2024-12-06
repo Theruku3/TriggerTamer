@@ -4,7 +4,7 @@ import java.awt.*;
 public class changeSounds {
 
     public void showWindow() {
-        // this sets the window title
+        // this sets the window title for change sounds
         JFrame frame = new JFrame("Change Sounds");
         frame.setSize(800, 600); // This sets the width to 800px and the height to 600px
         frame.setLocationRelativeTo(null); // this centers the frame on the screen
@@ -24,15 +24,25 @@ public class changeSounds {
         // Add some space between the title and the button
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Adds vertical space (20px)
 
-        // Create the "Random Noise" button and add it under the title
-        JButton randomButton = new JButton("Add Sound");
-       randomButton.addActionListener(e -> {
+        // Create the "Add Sound" button and add it under the title
+        JButton addSoundButton = new JButton("Add Sound");
+       addSoundButton.addActionListener(e -> {
             mainMenu.showWindow(); // Return to main menu
             soundPlayer.playSound("sounds/button_click.wav");
             frame.dispose(); // Close the current window
         });
-        randomButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the button
-        mainPanel.add(randomButton); // Add the button to the main panel
+        addSoundButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the button
+        mainPanel.add(addSoundButton); // Add the button to the main panel
+
+         // Create the "Remove Sound" button and add it under the title
+         JButton removeSoundButton = new JButton("Remove Sound");
+         removeSoundButton.addActionListener(e -> {
+              mainMenu.showWindow(); // Return to main menu
+              soundPlayer.playSound("sounds/button_click.wav");
+              frame.dispose(); // Close the current window
+          });
+          removeSoundButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the button
+          mainPanel.add(removeSoundButton); // Add the button to the main panel
 
         // Add the mainPanel (with stacked title and button) to the center of the frame
         frame.add(mainPanel, BorderLayout.CENTER);
