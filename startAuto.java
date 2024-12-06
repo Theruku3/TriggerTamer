@@ -5,12 +5,17 @@ import java.util.Random;
 
 public class startAuto {
 
+    private Timer timer; // this is a timer to randomly output sound
+
     public void showWindow() {
         // this sets the window title
         JFrame frame = new JFrame("Automatic Sounds");
         frame.setSize(800, 600); // This sets the width to 800px and the height to 600px
         frame.setLocationRelativeTo(null); // this centers the frame on the screen
         frame.setLayout(new BorderLayout()); // Set the layout to BorderLayout
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
 
         // this adds a title to the frame
         JLabel pageTitle = new JLabel("Automatic Sounds", JLabel.CENTER);
@@ -54,14 +59,22 @@ public class startAuto {
         // Set up the random noise functionality
         final File dir = new File("sounds/trigger_noises");
         File[] files = dir.listFiles();
-        Random rand = new Random();
+        timer = new Timer(4897, e -> randomNoisePlayer(files));
+        timer.start();
+
 
         randomButton.addActionListener(e -> {
-            File randomSoundFile = files[rand.nextInt(files.length)];
+            int rand = Math.toIntExact(System.currentTimeMillis() / 1000) % files.length;
+            File randomSoundFile = files[rand];
             soundPlayer.playSound("sounds/trigger_noises/" + randomSoundFile.getName());
         });
 
         // Make the frame visible
         frame.setVisible(true);
+    }
+    private void randomNoisePlayer(File[] files){
+        int rand = Math.toIntExact(System.currentTimeMillis() / 1000) % files.length;
+            File randomSoundFile = files[rand];
+            soundPlayer.playSound("sounds/trigger_noises/" + randomSoundFile.getName());
     }
 }

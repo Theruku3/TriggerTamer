@@ -10,29 +10,40 @@ public class changeSounds {
         frame.setLocationRelativeTo(null); // this centers the frame on the screen
         frame.setLayout(new BorderLayout()); // Set the layout to BorderLayout
 
-        // this adds a title to the frame
+        // Create a panel that will stack components vertically
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+        // Add the title at the top
         JLabel pageTitle = new JLabel("Change Sounds", JLabel.CENTER);
         pageTitle.setFont(new Font("Arial", Font.PLAIN, 20));
+        pageTitle.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment for the label
+        mainPanel.add(pageTitle); // Add the title to the main panel
 
-        // Add the title to the top (BorderLayout.NORTH)
-        frame.add(pageTitle, BorderLayout.NORTH);
+        // Add some space between the title and the button
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Adds vertical space (20px)
 
-        // Create a back button
+        // Create the "Random Noise" button and add it under the title
+        JButton randomButton = new JButton("Add Sound");
+       randomButton.addActionListener(e -> {
+            mainMenu.showWindow(); // Return to main menu
+            soundPlayer.playSound("sounds/button_click.wav");
+            frame.dispose(); // Close the current window
+        });
+        randomButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the button
+        mainPanel.add(randomButton); // Add the button to the main panel
+
+        // Add the mainPanel (with stacked title and button) to the center of the frame
+        frame.add(mainPanel, BorderLayout.CENTER);
+
+        // Create a back button and add it to the bottom
         JButton backToMenu = new JButton("<-- Back to Menu");
         backToMenu.addActionListener(e -> {
             mainMenu.showWindow(); // Return to main menu
             soundPlayer.playSound("sounds/button_click.wav");
             frame.dispose(); // Close the current window
         });
-
-        // Add the back button to the bottom (BorderLayout.SOUTH)
         frame.add(backToMenu, BorderLayout.SOUTH);
-
-        // Create a panel in the center for additional content (if needed)
-        JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new FlowLayout()); // Example layout for central content
-        contentPanel.add(new JLabel("Automatic Soundboard Controls")); // Example content
-        frame.add(contentPanel, BorderLayout.CENTER);
 
         // Make the frame visible
         frame.setVisible(true);

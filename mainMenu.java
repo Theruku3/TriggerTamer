@@ -35,6 +35,7 @@ public class mainMenu extends JFrame {
         frame.setLocationRelativeTo(null);  // This centers the frame on the screen
         frame.setLayout(new BorderLayout());  // Set layout for the window
         frame.setVisible(true);  // This displays the frame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Create a panel for the title image
         JPanel imagePanel = new JPanel(new BorderLayout());
