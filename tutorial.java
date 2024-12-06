@@ -9,6 +9,8 @@ public class tutorial {
         frame.setSize(800, 600); // This sets the width to 800px and the height to 600px
         frame.setLocationRelativeTo(null); // this centers the frame on the screen
         frame.setLayout(new BorderLayout()); // Set the layout to BorderLayout
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         // this adds a title to the frame
         JLabel pageTitle = new JLabel("Tutorial", JLabel.CENTER);

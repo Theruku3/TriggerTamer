@@ -30,6 +30,7 @@ public class startAuto {
             mainMenu.showWindow(); // Return to main menu
             soundPlayer.playSound("sounds/button_click.wav");
             frame.dispose(); // Close the current window
+            timer.stop();
         });
 
         // Add the back button to the bottom (BorderLayout.SOUTH)
@@ -59,7 +60,7 @@ public class startAuto {
         // Set up the random noise functionality
         final File dir = new File("sounds/trigger_noises");
         File[] files = dir.listFiles();
-        timer = new Timer(4897, e -> randomNoisePlayer(files));
+        timer = new Timer(7000, e -> randomNoisePlayer(files));
         timer.start();
 
 
