@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.util.Random;
 
 public class startAuto {
 
@@ -28,11 +30,36 @@ public class startAuto {
         // Add the back button to the bottom (BorderLayout.SOUTH)
         frame.add(backToMenu, BorderLayout.SOUTH);
 
-        // Create a panel in the center for additional content (if needed)
+        // Create a combined panel to hold the buttons and other content
+        JPanel combinedPanel = new JPanel();
+        combinedPanel.setLayout(new BorderLayout());
+
+        // Create a panel for the menu buttons using GridLayout
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 3, 10, 10));
+        JButton randomButton = new JButton("Random Noise");
+        buttonPanel.add(randomButton);
+
+        // Add button panel to the top of the combined panel
+        combinedPanel.add(buttonPanel, BorderLayout.NORTH);
+
+        // Add additional content panel to the center
         JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new FlowLayout()); // Example layout for central content
-        contentPanel.add(new JLabel("Automatic Soundboard Controls")); // Example content
-        frame.add(contentPanel, BorderLayout.CENTER);
+        contentPanel.setLayout(new FlowLayout());
+        contentPanel.add(new JLabel("Automatic Soundboard Controls"));
+        combinedPanel.add(contentPanel, BorderLayout.CENTER);
+
+        // Add the combined panel to the CENTER of the frame
+        frame.add(combinedPanel, BorderLayout.CENTER);
+
+        // Set up the random noise functionality
+        final File dir = new File("sounds/trigger_noises");
+        File[] files = dir.listFiles();
+        Random rand = new Random();
+
+        randomButton.addActionListener(e -> {
+            File randomSoundFile = files[rand.nextInt(files.length)];
+            soundPlayer.playSound("sounds/trigger_noises/" + randomSoundFile.getName());
+        });
 
         // Make the frame visible
         frame.setVisible(true);
