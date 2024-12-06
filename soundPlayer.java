@@ -16,4 +16,8 @@ public class soundPlayer {
             ex.printStackTrace();
         }
     }
+
+    public static void playSoundRepeat (int repeatValue){
+        
+    }
 }
