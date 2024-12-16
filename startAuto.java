@@ -64,11 +64,7 @@ public class startAuto {
         timer.start();
 
 
-        randomButton.addActionListener(e -> {
-            int rand = (int)Math.sqrt(Math.toIntExact(System.currentTimeMillis()) / 1000) % files.length;
-            File randomSoundFile = files[rand];
-            soundPlayer.playSound("sounds/trigger_noises/" + randomSoundFile.getName());
-        });
+        randomButton.addActionListener(e -> randomNoisePlayer(files));
 
         // Make the frame visible
         frame.setVisible(true);
