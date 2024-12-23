@@ -43,6 +43,20 @@ public class changeSounds {
         Files.copy(sourceFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
     }
 
+     // Helper method to open a file chooser at the specified directory
+     public static String getFileFromDirectory(String directoryPath) {
+        String filepath = "file not chosen";
+        JFileChooser chooser = new JFileChooser(directoryPath); // Open file chooser in the given directory
+        chooser.setCurrentDirectory(new File(directoryPath));
+        int result = chooser.showOpenDialog(chooser);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = chooser.getSelectedFile();
+            filepath = selectedFile.getAbsolutePath();
+        }
+        return filepath;
+    }
+
     // Method to choose a file from the explorer
     public static String getFileName(){
         String filepath = "file not chosen";
@@ -107,7 +121,33 @@ public class changeSounds {
         JButton removeSoundButton = new JButton("Remove Sound");
         removeSoundButton.addActionListener(e -> {
             soundPlayer.playSound("sounds/button_click.wav"); // Plays sound when button is clicked
-            // Logic for removing sound can go here
+
+            // Open file explorer starting from the trigger_noises folder
+            String triggerNoisesFolder = "sounds/trigger_noises";
+            String selectedFilePath = getFileFromDirectory(triggerNoisesFolder);
+
+            if (!selectedFilePath.equals("file not chosen")) {
+                File selectedFile = new File(selectedFilePath);
+
+                // Check if the selected file is inside the trigger_noises folder
+                if (selectedFile.getParent().equals(new File(triggerNoisesFolder).getAbsolutePath())) {
+                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this file?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+
+                    // If the user confirms, delete the file
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        try {
+                            Files.delete(selectedFile.toPath());
+                            JOptionPane.showMessageDialog(null, "File removed successfully!");
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Error removing file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error: You can only remove files from the trigger_noises folder.", "Invalid File", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No file chosen.");
+            }
         });
         removeSoundButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the button
         mainPanel.add(removeSoundButton); // Add the button to the main panel

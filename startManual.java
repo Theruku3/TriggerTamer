@@ -23,7 +23,7 @@ public class startManual {
         frame.add(pageTitle, BorderLayout.NORTH); // Add the title to the top
 
         // Create a panel for the menu buttons using GridLayout
-        JPanel buttonPanel = new JPanel(new GridLayout(3, 3, 10, 10));
+        JPanel buttonPanel = new JPanel(new GridLayout(6, 5, 10, 10));
 
         // Create buttons for each sound
         JButton thunderNoiseButton = new JButton("Thunder Noise");
