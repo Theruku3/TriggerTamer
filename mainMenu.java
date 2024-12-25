@@ -30,7 +30,7 @@ public class mainMenu extends JFrame {
         startTime = System.currentTimeMillis();
         
         // Create the window
-        JFrame frame = new JFrame("Parental Controls Menu");  // Corrected: JFrame instead of Frame
+        JFrame frame = new JFrame("Trigger Tamer");  // Corrected: JFrame instead of Frame
         frame.setSize(800, 600);  // This sets the width to 800px and the height to 600px
         frame.setLocationRelativeTo(null);  // This centers the frame on the screen
         frame.setLayout(new BorderLayout());  // Set layout for the window

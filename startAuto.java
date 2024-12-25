@@ -1,28 +1,28 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.io.File;
 import java.util.Random;
 
-public class startAuto {
+public class startAuto implements ChangeListener {
 
-    private Timer timer; // this is a timer to randomly output sound
+    private Timer timer; // Timer to randomly output sound
+    private JLabel sliderLabel = new JLabel(); // Class-level slider label
+    private JSlider slider; // Class-level slider
 
     public void showWindow() {
-        // this sets the window title
+        // Set the window title
         JFrame frame = new JFrame("Automatic Sounds");
-        frame.setSize(800, 600); // This sets the width to 800px and the height to 600px
-        frame.setLocationRelativeTo(null); // this centers the frame on the screen
+        frame.setSize(800, 600); // Set the width to 800px and the height to 600px
+        frame.setLocationRelativeTo(null); // Center the frame on the screen
         frame.setLayout(new BorderLayout()); // Set the layout to BorderLayout
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-
-        // this adds a title to the frame
+        // Add a title to the frame
         JLabel pageTitle = new JLabel("Automatic Sounds", JLabel.CENTER);
         pageTitle.setFont(new Font("Arial", Font.PLAIN, 20));
-
-        // Add the title to the top (BorderLayout.NORTH)
-        frame.add(pageTitle, BorderLayout.NORTH);
+        frame.add(pageTitle, BorderLayout.NORTH); // Add the title to the top
 
         // Create a back button
         JButton backToMenu = new JButton("<-- Back to Menu");
@@ -32,46 +32,63 @@ public class startAuto {
             frame.dispose(); // Close the current window
             timer.stop();
         });
+        frame.add(backToMenu, BorderLayout.PAGE_END); // Add back button to the bottom
 
-        // Add the back button to the bottom (BorderLayout.SOUTH)
-        frame.add(backToMenu, BorderLayout.SOUTH);
-
-        // Create a combined panel to hold the buttons and other content
+        // Create a combined panel to hold buttons and other content
         JPanel combinedPanel = new JPanel();
         combinedPanel.setLayout(new BorderLayout());
 
-        // Create a panel for the menu buttons using GridLayout
+        // Create a panel for menu buttons using GridLayout
         JPanel buttonPanel = new JPanel(new GridLayout(3, 3, 10, 10));
         JButton randomButton = new JButton("Random Noise");
         buttonPanel.add(randomButton);
+        combinedPanel.add(buttonPanel, BorderLayout.NORTH); // Add button panel to the top
 
-        // Add button panel to the top of the combined panel
-        combinedPanel.add(buttonPanel, BorderLayout.NORTH);
+        // Create and configure the slider for changing how often sound automatically plays
+        slider = new JSlider(0, 300, 150);
+        slider.setPreferredSize(new Dimension(400, 200));
+        slider.setPaintTicks(true);
+        slider.setPaintTrack(true);
+        slider.setMajorTickSpacing(30);
+        slider.setPaintLabels(true);
+        slider.setFont(new Font("MV Boli", Font.PLAIN, 15));
+        slider.addChangeListener(this); // Add a change listener to the slider
 
-        // Add additional content panel to the center
-        JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new FlowLayout());
-        contentPanel.add(new JLabel("Automatic Soundboard Controls"));
-        combinedPanel.add(contentPanel, BorderLayout.CENTER);
+        // Set initial text for the slider label
+        sliderLabel.setText("Current Interval Between Random Sounds: " + slider.getValue() + "s");
+        sliderLabel.setFont(new Font("Arial", Font.PLAIN, 20));
 
-        // Add the combined panel to the CENTER of the frame
+        // Create a new panel to hold both the slider and the label
+        JPanel sliderPanel = new JPanel(new BorderLayout());
+        sliderPanel.add(sliderLabel, BorderLayout.NORTH); // Add label above the slider
+        sliderPanel.add(slider, BorderLayout.CENTER);     // Add the slider below the label
+        combinedPanel.add(sliderPanel, BorderLayout.SOUTH); // Add the sliderPanel to the bottom
+
+        // Add the combined panel to the frame
         frame.add(combinedPanel, BorderLayout.CENTER);
 
         // Set up the random noise functionality
         final File dir = new File("sounds/trigger_noises");
         File[] files = dir.listFiles();
-        timer = new Timer(7000, e -> randomNoisePlayer(files));
-        timer.start();
+        timer = new Timer(7000, e -> randomNoisePlayer(files)); // Timer to play random sound
+        timer.start(); // Start the timer
 
-
-        randomButton.addActionListener(e -> randomNoisePlayer(files));
+        randomButton.addActionListener(e -> randomNoisePlayer(files)); // Play random noise on button click
 
         // Make the frame visible
         frame.setVisible(true);
     }
-    private void randomNoisePlayer(File[] files){
-        int rand = Math.toIntExact(System.currentTimeMillis() / 1000) % files.length;
-            File randomSoundFile = files[rand];
-            soundPlayer.playSound("sounds/trigger_noises/" + randomSoundFile.getName());
+
+    // Method to play random sound
+    private void randomNoisePlayer(File[] files) {
+        int rand = new Random().nextInt(files.length);
+        File randomSoundFile = files[rand];
+        soundPlayer.playSound("sounds/trigger_noises/" + randomSoundFile.getName());
+    }
+
+    // Handle slider state changes
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        sliderLabel.setText("Current Interval Between Random Sounds: " + slider.getValue() + "s");
     }
 }
